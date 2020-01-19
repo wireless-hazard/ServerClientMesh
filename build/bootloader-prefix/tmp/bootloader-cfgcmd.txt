@@ -1,0 +1,1 @@
+cmd='/usr/bin/cmake;-DSDKCONFIG=/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/sdkconfig;-DIDF_PATH=/home/magno/esp-idf;-DSECURE_BOOT_SIGNING_KEY=/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino;-DEXTRA_COMPONENT_DIRS=/home/magno/esp-idf/components/bootloader;-GNinja;<SOURCE_DIR><SOURCE_SUBDIR>'
