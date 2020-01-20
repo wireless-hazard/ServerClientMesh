@@ -1,8 +1,8 @@
 {
     "project_name":       "bootloader",
     "project_path":       "/home/magno/esp-idf/components/bootloader/subproject",
-    "build_dir":          "/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/bootloader",
-    "config_file":        "/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/sdkconfig",
+    "build_dir":          "/home/magno/Documents/Github/mesh/ServerClientMesh/build/bootloader",
+    "config_file":        "/home/magno/Documents/Github/mesh/ServerClientMesh/sdkconfig",
     "config_defaults":    "",
     "app_elf":            "bootloader.elf",
     "app_bin":            "bootloader.bin",

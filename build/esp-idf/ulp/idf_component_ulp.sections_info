@@ -1,4 +1,4 @@
-In archive /home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/esp-idf/ulp/libulp.a:
+In archive /home/magno/Documents/Github/mesh/ServerClientMesh/build/esp-idf/ulp/libulp.a:
 
 ulp.c.obj:     file format elf32-xtensa-le
 
@@ -40,15 +40,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  17 .debug_line   00000391  00000000  00000000  00000f0f  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 18 .debug_str    000003d2  00000000  00000000  000012a0  2**0
+ 18 .debug_str    000003c7  00000000  00000000  000012a0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000003b  00000000  00000000  00001672  2**0
+ 19 .comment      0000003b  00000000  00000000  00001667  2**0
                   CONTENTS, READONLY
- 20 .xtensa.info  00000038  00000000  00000000  000016ad  2**0
+ 20 .xtensa.info  00000038  00000000  00000000  000016a2  2**0
                   CONTENTS, READONLY
- 21 .xt.lit       00000018  00000000  00000000  000016e5  2**0
+ 21 .xt.lit       00000018  00000000  00000000  000016da  2**0
                   CONTENTS, RELOC, READONLY
- 22 .xt.prop      00000150  00000000  00000000  000016fd  2**0
+ 22 .xt.prop      00000150  00000000  00000000  000016f2  2**0
                   CONTENTS, RELOC, READONLY
 
 ulp_macro.c.obj:     file format elf32-xtensa-le
@@ -91,13 +91,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  17 .debug_line   0000051a  00000000  00000000  00001dd7  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 18 .debug_str    00000475  00000000  00000000  000022f1  2**0
+ 18 .debug_str    0000046a  00000000  00000000  000022f1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000003b  00000000  00000000  00002766  2**0
+ 19 .comment      0000003b  00000000  00000000  0000275b  2**0
                   CONTENTS, READONLY
- 20 .xtensa.info  00000038  00000000  00000000  000027a1  2**0
+ 20 .xtensa.info  00000038  00000000  00000000  00002796  2**0
                   CONTENTS, READONLY
- 21 .xt.lit       00000010  00000000  00000000  000027d9  2**0
+ 21 .xt.lit       00000010  00000000  00000000  000027ce  2**0
                   CONTENTS, RELOC, READONLY
- 22 .xt.prop      000002dc  00000000  00000000  000027e9  2**0
+ 22 .xt.prop      000002dc  00000000  00000000  000027de  2**0
                   CONTENTS, RELOC, READONLY

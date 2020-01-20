@@ -1,4 +1,4 @@
-In archive /home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/esp-idf/tcpip_adapter/libtcpip_adapter.a:
+In archive /home/magno/Documents/Github/mesh/ServerClientMesh/build/esp-idf/tcpip_adapter/libtcpip_adapter.a:
 
 tcpip_adapter_lwip.c.obj:     file format elf32-xtensa-le
 
@@ -274,13 +274,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
 134 .debug_line   0000187c  00000000  00000000  00007253  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
-135 .debug_str    0000247e  00000000  00000000  00008acf  2**0
+135 .debug_str    00002473  00000000  00000000  00008acf  2**0
                   CONTENTS, READONLY, DEBUGGING
-136 .comment      0000003b  00000000  00000000  0000af4d  2**0
+136 .comment      0000003b  00000000  00000000  0000af42  2**0
                   CONTENTS, READONLY
-137 .xtensa.info  00000038  00000000  00000000  0000af88  2**0
+137 .xtensa.info  00000038  00000000  00000000  0000af7d  2**0
                   CONTENTS, READONLY
-138 .xt.lit       000001b8  00000000  00000000  0000afc0  2**0
+138 .xt.lit       000001b8  00000000  00000000  0000afb5  2**0
                   CONTENTS, RELOC, READONLY
-139 .xt.prop      00001968  00000000  00000000  0000b178  2**0
+139 .xt.prop      00001968  00000000  00000000  0000b16d  2**0
                   CONTENTS, RELOC, READONLY

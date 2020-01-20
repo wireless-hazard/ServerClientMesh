@@ -1,4 +1,4 @@
-# Install script for directory: /home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/main
+# Install script for directory: /home/magno/Documents/Github/mesh/ServerClientMesh/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

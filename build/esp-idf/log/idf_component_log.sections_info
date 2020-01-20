@@ -1,4 +1,4 @@
-In archive /home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/esp-idf/log/liblog.a:
+In archive /home/magno/Documents/Github/mesh/ServerClientMesh/build/esp-idf/log/liblog.a:
 
 log.c.obj:     file format elf32-xtensa-le
 
@@ -78,13 +78,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  36 .debug_line   0000087e  00000000  00000000  00002985  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 37 .debug_str    00000693  00000000  00000000  00003203  2**0
+ 37 .debug_str    00000688  00000000  00000000  00003203  2**0
                   CONTENTS, READONLY, DEBUGGING
- 38 .comment      0000003b  00000000  00000000  00003896  2**0
+ 38 .comment      0000003b  00000000  00000000  0000388b  2**0
                   CONTENTS, READONLY
- 39 .xtensa.info  00000038  00000000  00000000  000038d1  2**0
+ 39 .xtensa.info  00000038  00000000  00000000  000038c6  2**0
                   CONTENTS, READONLY
- 40 .xt.lit       00000048  00000000  00000000  00003909  2**0
+ 40 .xt.lit       00000048  00000000  00000000  000038fe  2**0
                   CONTENTS, RELOC, READONLY
- 41 .xt.prop      00000654  00000000  00000000  00003951  2**0
+ 41 .xt.prop      00000654  00000000  00000000  00003946  2**0
                   CONTENTS, RELOC, READONLY

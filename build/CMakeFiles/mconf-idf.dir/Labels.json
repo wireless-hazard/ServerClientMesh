@@ -2,34 +2,34 @@
 	"sources" : 
 	[
 		{
-			"file" : "/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/CMakeFiles/mconf-idf"
+			"file" : "/home/magno/Documents/Github/mesh/ServerClientMesh/build/CMakeFiles/mconf-idf"
 		},
 		{
-			"file" : "/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/CMakeFiles/mconf-idf.rule"
+			"file" : "/home/magno/Documents/Github/mesh/ServerClientMesh/build/CMakeFiles/mconf-idf.rule"
 		},
 		{
-			"file" : "/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/CMakeFiles/mconf-idf-complete.rule"
+			"file" : "/home/magno/Documents/Github/mesh/ServerClientMesh/build/CMakeFiles/mconf-idf-complete.rule"
 		},
 		{
-			"file" : "/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install.rule"
+			"file" : "/home/magno/Documents/Github/mesh/ServerClientMesh/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install.rule"
 		},
 		{
-			"file" : "/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir.rule"
+			"file" : "/home/magno/Documents/Github/mesh/ServerClientMesh/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir.rule"
 		},
 		{
-			"file" : "/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download.rule"
+			"file" : "/home/magno/Documents/Github/mesh/ServerClientMesh/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download.rule"
 		},
 		{
-			"file" : "/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update.rule"
+			"file" : "/home/magno/Documents/Github/mesh/ServerClientMesh/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update.rule"
 		},
 		{
-			"file" : "/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch.rule"
+			"file" : "/home/magno/Documents/Github/mesh/ServerClientMesh/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch.rule"
 		},
 		{
-			"file" : "/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure.rule"
+			"file" : "/home/magno/Documents/Github/mesh/ServerClientMesh/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure.rule"
 		},
 		{
-			"file" : "/home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build.rule"
+			"file" : "/home/magno/Documents/Github/mesh/ServerClientMesh/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build.rule"
 		}
 	],
 	"target" : 

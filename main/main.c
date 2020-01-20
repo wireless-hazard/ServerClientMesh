@@ -10,7 +10,6 @@
 #include "freertos/event_groups.h"
 #include "lwip/sockets.h"
 
-#define IPDELE "192.168.137.55"
 #define ROUTER "192.168.43.1"
 #define MASCARADELE "255.255.255.0"
 #define CAMADAS 3
@@ -38,21 +37,15 @@ static ip4_addr_t ipteste[4] = {0,};
 
 void waytogate(){
 	
-	// adm.mip.ip4.addr = ipaddr_addr("192.168.137.1");
-	// adm.mip.port = 8000;
-	// memcpy(tx_buffer,(uint8_t *)&mesh_layer,sizeof(mesh_layer));
-
 	while(true){
 		
 		adm.mip.ip4.addr = ipaddr_addr(TODS_IP);
 		adm.mip.port = TODS_PORT;
-		// memcpy(tx_buffer,(uint8_t *)&mesh_layer,sizeof(mesh_layer));
-
-		// memcpy(adm.addr, mesh_parent_addr.addr, 6);
+		
 		current_status.data = tx_buffer;
 		current_status.size = sizeof(tx_buffer);
 		current_status.proto = MESH_PROTO_BIN;
-		// bandeira = MESH_DATA_P2P;
+		
 		bandeira = MESH_DATA_TODS;
 		wifi_ap_record_t apdata;
 
@@ -89,7 +82,7 @@ void mesh_p2p_rx(void *pvParameters){
 		
 		if (rx_pending.toSelf>0){
 			esp_err_t err = esp_mesh_recv(&from,&data,0,&flag,NULL,0); //portMAX_DELAY
-			// memcpy(teste,&data.data,sizeof(data.data));
+			
 			uint8_t *p = data.data;
 
 			ESP_LOGE(MESH_TAG, "vindos de: "MACSTR" dados: %d, size: %d",MAC2STR(from.addr),  (int8_t)*p, data.size);
@@ -136,8 +129,7 @@ void mesh_p2p_rx(void *pvParameters){
 	
 			int error = connect(sock, (struct sockaddr *)&destAddr, sizeof(destAddr));
 			printf("Estado da conexao: %d\n",error);
-			// send(sock,&data,strlen(&data), 0);
-
+			
 			send(sock,&dados_final,strlen(&dados_final),0);
 			
 			close(sock);
@@ -186,7 +178,9 @@ void mesh_event_handler(mesh_event_t evento){
 		ESP_LOGW(MESH_TAG,"Pai desconectou\n");
 	break;
 	case MESH_EVENT_NO_PARENT_FOUND:
-		ESP_LOGW(MESH_TAG,"eternamente IDLE\n");
+		ESP_LOGW(MESH_TAG,"eternamente IDLE\nESP32 ira reiniciar\n");
+		esp_restart();
+
 	break;
 	//
 	//MESH NETWORK UPDATE EVENTS
@@ -238,7 +232,7 @@ void mesh_event_handler(mesh_event_t evento){
                  IP2STR(&evento.info.got_ip.ip_info.ip),
                  IP2STR(&evento.info.got_ip.ip_info.netmask),
                  IP2STR(&evento.info.got_ip.ip_info.gw));
-		// xTaskCreatePinnedToCore(&idf_socket,"Comunicacao",4096,NULL,5,NULL,0);
+		
 		xTaskCreatePinnedToCore(&mesh_p2p_rx,"Recepcao",4096,NULL,5,NULL,1);
 	break;
 	case MESH_EVENT_ROOT_LOST_IP: //The lease time  of the Node's station dynamic IP configuration has expired
@@ -256,7 +250,21 @@ void mesh_event_handler(mesh_event_t evento){
 	}
 }
 
-void rotinaMesh(){
+void rotinaInit(){
+	
+	tcpip_adapter_init(); //Inicializa as estruturas de dados TCP/LwIP e cria a tarefa principal LwIP
+		
+	ESP_ERROR_CHECK(esp_event_loop_init(NULL,NULL)); //Lida com os eventos AINDA NAO IMPLEMENTADOS
+	
+	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT(); //
+	esp_wifi_init(&cfg); //Inicia o Wifi com os seus parametros padroes
+	
+	ESP_ERROR_CHECK(tcpip_adapter_dhcpc_stop(TCPIP_ADAPTER_IF_STA));//Desliga o cliente dhcp
+	ESP_ERROR_CHECK(tcpip_adapter_dhcps_stop(TCPIP_ADAPTER_IF_AP));//Desliga o servidor dhcp
+	
+	ESP_ERROR_CHECK(esp_wifi_start());
+
+	// Inicializacao Do MESH
 	
 	ESP_ERROR_CHECK(esp_mesh_init()); //Inicializa o "mesh stack"
 	ESP_ERROR_CHECK(esp_mesh_set_max_layer(CAMADAS));//Numero maximo de niveis da rede
@@ -278,32 +286,6 @@ void rotinaMesh(){
     ESP_ERROR_CHECK(esp_mesh_set_config(&config_mesh));
     /* mesh start */
     ESP_ERROR_CHECK(esp_mesh_start());
-	//esp_mesh_set_self_organized() nao usado pois self organized eh setado por default
-}
-
-void rotinaWifi(){
-	
-	//s_wifi_event_group = xEventGroupCreate();//TALVEZ NAO SEJA ESSE //PELO JEITO NAO EH MESMO RSRSRSRS
-	
-	tcpip_adapter_init(); //Inicializa as estruturas de dados TCP/LwIP e cria a tarefa principal LwIP
-	//atribuicao de ip estatico
-	tcpip_adapter_ip_info_t ip_estatico;
-	ip_estatico.ip.addr = ipaddr_addr(IPDELE);//Atribui ip estatico
-	ip_estatico.gw.addr = ipaddr_addr(ROUTER);//Atribui o ip do gateway
-	ip_estatico.netmask.addr = ipaddr_addr(MASCARADELE);//Atribui a mascara de rede
-	tcpip_adapter_set_ip_info(WIFI_IF_STA,&ip_estatico);
-	
-	
-	ESP_ERROR_CHECK(esp_event_loop_init(NULL,NULL)); //Lida com os eventos AINDA NAO IMPLEMENTADOS
-	
-	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT(); //
-	esp_wifi_init(&cfg); //Inicia o Wifi com os seus parametros padroes
-	
-	ESP_ERROR_CHECK(tcpip_adapter_dhcpc_stop(TCPIP_ADAPTER_IF_STA));//Desliga o cliente dhcp
-	ESP_ERROR_CHECK(tcpip_adapter_dhcps_stop(TCPIP_ADAPTER_IF_AP));//Desliga o servidor dhcp
-	
-	ESP_ERROR_CHECK(esp_wifi_start());
-	rotinaMesh();
 }
 
 void app_main(void){
@@ -315,5 +297,5 @@ void app_main(void){
     }
     ESP_ERROR_CHECK(ret);
 	
-	rotinaWifi();
+	rotinaInit();
 }

@@ -1,4 +1,4 @@
-In archive /home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/esp-idf/app_update/libapp_update.a:
+In archive /home/magno/Documents/Github/mesh/ServerClientMesh/build/esp-idf/app_update/libapp_update.a:
 
 esp_ota_ops.c.obj:     file format elf32-xtensa-le
 
@@ -136,15 +136,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  65 .debug_line   00000eea  00000000  00000000  00004773  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 66 .debug_str    00001196  00000000  00000000  0000565d  2**0
+ 66 .debug_str    0000118b  00000000  00000000  0000565d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 67 .comment      0000003b  00000000  00000000  000067f3  2**0
+ 67 .comment      0000003b  00000000  00000000  000067e8  2**0
                   CONTENTS, READONLY
- 68 .xtensa.info  00000038  00000000  00000000  0000682e  2**0
+ 68 .xtensa.info  00000038  00000000  00000000  00006823  2**0
                   CONTENTS, READONLY
- 69 .xt.lit       000000b8  00000000  00000000  00006866  2**0
+ 69 .xt.lit       000000b8  00000000  00000000  0000685b  2**0
                   CONTENTS, RELOC, READONLY
- 70 .xt.prop      00000e1c  00000000  00000000  0000691e  2**0
+ 70 .xt.prop      00000e1c  00000000  00000000  00006913  2**0
                   CONTENTS, RELOC, READONLY
 
 esp_app_desc.c.obj:     file format elf32-xtensa-le
@@ -181,13 +181,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  14 .debug_line   00000253  00000000  00000000  00000737  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 15 .debug_str    00000276  00000000  00000000  0000098a  2**0
+ 15 .debug_str    0000026b  00000000  00000000  0000098a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .comment      0000003b  00000000  00000000  00000c00  2**0
+ 16 .comment      0000003b  00000000  00000000  00000bf5  2**0
                   CONTENTS, READONLY
- 17 .xtensa.info  00000038  00000000  00000000  00000c3b  2**0
+ 17 .xtensa.info  00000038  00000000  00000000  00000c30  2**0
                   CONTENTS, READONLY
- 18 .xt.lit       00000010  00000000  00000000  00000c73  2**0
+ 18 .xt.lit       00000010  00000000  00000000  00000c68  2**0
                   CONTENTS, RELOC, READONLY
- 19 .xt.prop      000000cc  00000000  00000000  00000c83  2**0
+ 19 .xt.prop      000000cc  00000000  00000000  00000c78  2**0
                   CONTENTS, RELOC, READONLY

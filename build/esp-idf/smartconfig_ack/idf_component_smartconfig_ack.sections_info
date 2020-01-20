@@ -1,4 +1,4 @@
-In archive /home/magno/Documents/Bitbucket/TCCMESH/meshino/meshbymaquino/build/esp-idf/smartconfig_ack/libsmartconfig_ack.a:
+In archive /home/magno/Documents/Github/mesh/ServerClientMesh/build/esp-idf/smartconfig_ack/libsmartconfig_ack.a:
 
 smartconfig_ack.c.obj:     file format elf32-xtensa-le
 
@@ -44,13 +44,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  19 .debug_line   000005db  00000000  00000000  000016e0  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 20 .debug_str    000006f7  00000000  00000000  00001cbb  2**0
+ 20 .debug_str    000006ec  00000000  00000000  00001cbb  2**0
                   CONTENTS, READONLY, DEBUGGING
- 21 .comment      0000003b  00000000  00000000  000023b2  2**0
+ 21 .comment      0000003b  00000000  00000000  000023a7  2**0
                   CONTENTS, READONLY
- 22 .xtensa.info  00000038  00000000  00000000  000023ed  2**0
+ 22 .xtensa.info  00000038  00000000  00000000  000023e2  2**0
                   CONTENTS, READONLY
- 23 .xt.lit       00000020  00000000  00000000  00002425  2**0
+ 23 .xt.lit       00000020  00000000  00000000  0000241a  2**0
                   CONTENTS, RELOC, READONLY
- 24 .xt.prop      000001ec  00000000  00000000  00002445  2**0
+ 24 .xt.prop      000001ec  00000000  00000000  0000243a  2**0
                   CONTENTS, RELOC, READONLY
