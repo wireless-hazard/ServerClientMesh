@@ -83,13 +83,6 @@ void mesh_p2p_rx(void *pvParameters){
 
 		data.size = MESH_MTU;
 		
-		if (rx_pending.toSelf>0){
-			esp_err_t err = esp_mesh_recv(&from,&data,0,&flag,NULL,0); //portMAX_DELAY
-			
-			uint8_t *p = data.data;
-
-			ESP_LOGE(MESH_TAG, "vindos de: "MACSTR" dados: %d, size: %d",MAC2STR(from.addr),  (int8_t)*p, data.size);
-		}
 		if(rx_pending.toDS>0){
 
 			esp_err_t err = esp_mesh_recv_toDS(&from,&to,&data,0,&flag,NULL,0);
@@ -127,8 +120,11 @@ void mesh_p2p_rx(void *pvParameters){
     		inet_ntoa_r(destAddr.sin_addr, addr_str, sizeof(addr_str) - 1);
 	
 			int sock =  socket(addr_family, SOCK_STREAM, ip_protocol);
-	
 			int error = connect(sock, (struct sockaddr *)&destAddr, sizeof(destAddr));
+			while(error!=0){
+				int error = connect(sock, (struct sockaddr *)&destAddr, sizeof(destAddr));
+				vTaskDelay(200/portTICK_PERIOD_MS);
+			}	
 			printf("Estado do socket %d\n", sock);
 			printf("Estado da conexao: %d\n",error);
 			
