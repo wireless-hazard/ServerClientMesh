@@ -12,15 +12,18 @@
 
 #define ROUTER "192.168.43.1"
 #define MASCARADELE "255.255.255.0"
-#define CAMADAS 3
-#define CANAL_WIFI 0
+
+#define TODS_IP "192.168.43.10"
+#define TODS_PORT 8000
+
 #define ROUTER_SSID "apteste"
 #define ROUTER_PSWD "magnomaia"
+
+#define CAMADAS 3
+#define CANAL_WIFI 0
 #define AUTH_MODE WIFI_AUTH_WPA_WPA2_PSK
 #define MAX_CLIENTS 5
 #define TX_SIZE (1460)
-#define TODS_IP "192.168.43.10"
-#define TODS_PORT 8000
 
 static const uint8_t MESH_ID[6] = {0x05, 0x02, 0x96, 0x05, 0x02, 0x96};
 static const char *MESH_TAG = "mesh_tagger";
@@ -112,10 +115,8 @@ void mesh_p2p_rx(void *pvParameters){
     		char ip_final[19]={0,};
     		char dados_final[data.size];
     		
-    		printf("%d\n", (int8_t)*p);
     		sprintf(ip_final,"%d.%d.%d.%d",Byte1,Byte2,Byte3,Byte4);
-    		printf("%d\n %d",sizeof(dados_final),sizeof(data.data));
-
+    		
     		sprintf(dados_final,"%d",(int8_t)*p);
 
     		destAddr.sin_addr.s_addr = inet_addr(ip_final);
@@ -128,6 +129,7 @@ void mesh_p2p_rx(void *pvParameters){
 			int sock =  socket(addr_family, SOCK_STREAM, ip_protocol);
 	
 			int error = connect(sock, (struct sockaddr *)&destAddr, sizeof(destAddr));
+			printf("Estado do socket %d\n", sock);
 			printf("Estado da conexao: %d\n",error);
 			
 			send(sock,&dados_final,strlen(&dados_final),0);
