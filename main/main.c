@@ -88,8 +88,8 @@ void mesh_p2p_rx(void *pvParameters){
 			esp_err_t err = esp_mesh_recv_toDS(&from,&to,&data,0,&flag,NULL,0);
 			uint8_t *p = data.data;
 
-			ESP_LOGE(MESH_TAG, "vindos de: "MACSTR" dados: %d, size: %d",MAC2STR(from.addr),  (int8_t)*p, data.size);
-			ESP_LOGE(MESH_TAG,"Passando os pacotes via SOCKETS para o ip "IPSTR"",IP2STR(&to.mip.ip4));
+			ESP_LOGW(MESH_TAG, "vindos de: "MACSTR" dados: %d, size: %d",MAC2STR(from.addr),  (int8_t)*p, data.size);
+			ESP_LOGW(MESH_TAG,"Passando os pacotes via SOCKETS para o ip "IPSTR"",IP2STR(&to.mip.ip4));
 
 			memcpy(ipteste,&to.mip.ip4.addr,sizeof(to.mip.ip4.addr));
 			
@@ -121,15 +121,16 @@ void mesh_p2p_rx(void *pvParameters){
 	
 			int sock =  socket(addr_family, SOCK_STREAM, ip_protocol);
 			int error = connect(sock, (struct sockaddr *)&destAddr, sizeof(destAddr));
-			while(error!=0){
-				int error = connect(sock, (struct sockaddr *)&destAddr, sizeof(destAddr));
-				vTaskDelay(200/portTICK_PERIOD_MS);
-			}	
-			printf("Estado do socket %d\n", sock);
-			printf("Estado da conexao: %d\n",error);
+			if(error!=0){
+				ESP_LOGE(MESH_TAG,"SERVIDOR SOCKET ESTA OFFLINE \n REINICIANDO CONEXAO");
+				xTaskCreatePinnedToCore(&mesh_p2p_rx,"Recepcao",4096,NULL,5,NULL,1);
+				vTaskDelete(NULL);	
+			}else{	
+				printf("Estado do socket %d\n", sock);
+				printf("Estado da conexao: %d\n",error);
 			
-			send(sock,&dados_final,strlen(&dados_final),0);
-			
+				send(sock,&dados_final,strlen(&dados_final),0);
+			}
 			close(sock);
 
 			
