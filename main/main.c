@@ -40,6 +40,9 @@ static ip4_addr_t ipteste[4] = {0,};
 
 void waytogate(){
 	
+	uint8_t prov_buffer[8] = {0,};
+	mesh_addr_t parent_bssid;
+
 	while(true){
 		
 		adm.mip.ip4.addr = ipaddr_addr(TODS_IP);
@@ -56,7 +59,21 @@ void waytogate(){
 		if (err == ESP_OK){
 			ESP_LOGW(MESH_TAG,"rssi: %d\n",apdata.rssi);
 		}
-		memcpy(current_status.data,(uint8_t *)&apdata.rssi,sizeof(apdata.rssi));
+
+		ESP_ERROR_CHECK(esp_mesh_get_parent_bssid(&parent_bssid));
+
+		prov_buffer[0] = (uint8_t)esp_mesh_get_layer();
+		prov_buffer[1] = (uint8_t)apdata.rssi;
+
+		int count = 0;
+		int j = 0;
+		for (int i = 5; i >= count; --i){
+			prov_buffer[j+2] = parent_bssid.addr[i];
+			++j;
+		}
+
+
+		memcpy(current_status.data, &prov_buffer, sizeof(prov_buffer));
 		ESP_ERROR_CHECK(esp_mesh_send(&adm,&current_status,bandeira,NULL,0));
 		ESP_LOGW(MESH_TAG,"Enviando camada para o router");
 		vTaskDelay(5*1000/portTICK_PERIOD_MS);
@@ -73,7 +90,6 @@ void mesh_p2p_rx(void *pvParameters){
 	data.size = MESH_MTU;
 	data.data = rx_buffer;
 	mesh_rx_pending_t rx_pending;
-	uint8_t teste = {0,};
 	
 	int flag = 0;
 
@@ -86,9 +102,8 @@ void mesh_p2p_rx(void *pvParameters){
 		if(rx_pending.toDS>0){
 
 			esp_err_t err = esp_mesh_recv_toDS(&from,&to,&data,0,&flag,NULL,0);
-			uint8_t *p = data.data;
-
-			ESP_LOGW(MESH_TAG, "vindos de: "MACSTR" dados: %d, size: %d",MAC2STR(from.addr),  (int8_t)*p, data.size);
+						
+			ESP_LOGW(MESH_TAG, "vindos de: "MACSTR" dados: %d, size: %d",MAC2STR(from.addr),  (int8_t)data.data[1], data.size);
 			ESP_LOGW(MESH_TAG,"Passando os pacotes via SOCKETS para o ip "IPSTR"",IP2STR(&to.mip.ip4));
 
 			memcpy(ipteste,&to.mip.ip4.addr,sizeof(to.mip.ip4.addr));
@@ -110,7 +125,7 @@ void mesh_p2p_rx(void *pvParameters){
     		
     		sprintf(ip_final,"%d.%d.%d.%d",Byte1,Byte2,Byte3,Byte4);
     		
-    		sprintf(dados_final,"%d",(int8_t)*p);
+    		sprintf(dados_final,"Vindos de: "MACSTR", Potencia do Parent(%02x:%02x:%02x:%02x:%02x:%02x): %d, Camada Mesh atual: %d",MAC2STR(from.addr),data.data[7],data.data[6],data.data[5],data.data[4],data.data[3],data.data[2],(int8_t)data.data[1],(int)data.data[0]);
 
     		destAddr.sin_addr.s_addr = inet_addr(ip_final);
     		destAddr.sin_family = AF_INET;
@@ -126,8 +141,7 @@ void mesh_p2p_rx(void *pvParameters){
 				xTaskCreatePinnedToCore(&mesh_p2p_rx,"Recepcao",4096,NULL,5,NULL,1);
 				vTaskDelete(NULL);	
 			}else{	
-				printf("Estado do socket %d\n", sock);
-				printf("Estado da conexao: %d\n",error);
+				printf("Estado da conexao: %dK\n",error);
 			
 				send(sock,&dados_final,strlen(&dados_final),0);
 			}
