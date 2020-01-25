@@ -65,13 +65,12 @@ void waytogate(){
 		prov_buffer[0] = (uint8_t)esp_mesh_get_layer();
 		prov_buffer[1] = (uint8_t)apdata.rssi;
 
-		int count = 0;
 		int j = 0;
-		for (int i = 5; i >= count; --i){
+
+		for (int i = 5; i >= 0; --i){
 			prov_buffer[j+2] = parent_bssid.addr[i];
 			++j;
 		}
-
 
 		memcpy(current_status.data, &prov_buffer, sizeof(prov_buffer));
 		ESP_ERROR_CHECK(esp_mesh_send(&adm,&current_status,bandeira,NULL,0));
@@ -125,7 +124,7 @@ void mesh_p2p_rx(void *pvParameters){
     		
     		sprintf(ip_final,"%d.%d.%d.%d",Byte1,Byte2,Byte3,Byte4);
     		
-    		sprintf(dados_final,"Vindos de: "MACSTR", Potencia do Parent(%02x:%02x:%02x:%02x:%02x:%02x): %d, Camada Mesh atual: %d",MAC2STR(from.addr),data.data[7],data.data[6],data.data[5],data.data[4],data.data[3],data.data[2],(int8_t)data.data[1],(int)data.data[0]);
+    		sprintf(dados_final, MACSTR";%02x:%02x:%02x:%02x:%02x:%02x;%d;%d",MAC2STR(from.addr),data.data[7],data.data[6],data.data[5],data.data[4],data.data[3],data.data[2],(int8_t)data.data[1],(int)data.data[0]);
 
     		destAddr.sin_addr.s_addr = inet_addr(ip_final);
     		destAddr.sin_family = AF_INET;
@@ -138,6 +137,7 @@ void mesh_p2p_rx(void *pvParameters){
 			int error = connect(sock, (struct sockaddr *)&destAddr, sizeof(destAddr));
 			if(error!=0){
 				ESP_LOGE(MESH_TAG,"SERVIDOR SOCKET ESTA OFFLINE \n REINICIANDO CONEXAO");
+				close(sock);
 				xTaskCreatePinnedToCore(&mesh_p2p_rx,"Recepcao",4096,NULL,5,NULL,1);
 				vTaskDelete(NULL);	
 			}else{	

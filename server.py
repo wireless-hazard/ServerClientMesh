@@ -1,5 +1,4 @@
-import socket,time,sys
-from datetime import datetime
+import socket,time
 
 while True:
 	with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
@@ -10,8 +9,10 @@ while True:
 			print('Connected by',addr)
 			while True:
 				data = conn.recv(1024)
-				print(data.decode())
+				dados = data.decode()
 				time.sleep(0.5)
 				if not data:
 					break
+				dados = dados.split(';')
+				print(dados[2])
 				conn.send('/n'.encode())
