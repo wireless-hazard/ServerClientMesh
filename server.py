@@ -1,4 +1,19 @@
 import socket,time
+from matplotlib import pyplot as plt
+import numpy as np
+
+esp = []
+parent = []
+rssi = []
+layer = []
+posicao = []
+
+plt.ion() #MODO INTERATIVO
+
+fig = plt.figure()
+grafico = fig.add_subplot(111,projection='polar')
+grafico.set_yticklabels([])
+grafico.set_xticklabels([])
 
 while True:
 	with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
@@ -14,5 +29,15 @@ while True:
 				if not data:
 					break
 				dados = dados.split(';')
-				print(dados[2])
+				esp.append(dados[0])
+				parent.append(dados[1])
+				rssi.append(dados[2])
+				layer.append(dados[3])
+				posicao.append(225*(np.pi/180))
+				# grafico.scatter(posicao[-1],int(layer[-1]),color='w')
+				grafico.scatter(posicao[-1],int(layer[-1]),color='c')
+				grp_text = grafico.annotate(rssi[-1]+'\n'+esp[-1],(posicao[-1],int(layer[-1])),fontsize=8)
+				fig.canvas.draw_idle()#REDESENHA O GRAFICO
+				plt.pause(0.1)
+				grp_text.remove()
 				conn.send('/n'.encode())
