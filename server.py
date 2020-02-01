@@ -27,7 +27,7 @@ while True:
 			while True:
 				data = conn.recv(1024)
 				dados = data.decode()
-				# time.sleep(0.5)
+				time.sleep(0.5)
 				if not data:
 					break
 				dados = dados.split(';')
