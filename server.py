@@ -32,11 +32,11 @@ while True:
 					break
 				dados = dados.split(';')
 				if dados[0] in esp:
-					if dados[1] in parent:
-						rssi[parent.index(dados[1])] = dados[2]
-						grp_text[parent.index(dados[1])].remove()
-						text = grafico.annotate(rssi[parent.index(dados[1])]+'\n'+esp[parent.index(dados[1])],(posicao[parent.index(dados[1])],int(layer[parent.index(dados[1])])),fontsize=8)
-						grp_text[parent.index(dados[1])] = text
+					if (dados[1] == parent[esp.index(dados[0])]):
+						rssi[esp.index(dados[0])] = dados[2]
+						grp_text[esp.index(dados[0])].remove()
+						text = grafico.annotate(rssi[esp.index(dados[0])]+'\n'+esp[esp.index(dados[0])],(posicao[esp.index(dados[0])],int(layer[esp.index(dados[0])])),fontsize=8)
+						grp_text[esp.index(dados[0])] = text
 				else:
 					esp.append(dados[0])
 					parent.append(dados[1])
