@@ -58,6 +58,10 @@ void waytogate(){
 		esp_err_t err = esp_wifi_sta_get_ap_info(&apdata);
 		if (err == ESP_OK){
 			ESP_LOGW(MESH_TAG,"rssi: %d\n",apdata.rssi);
+
+			// for(int ab=0;ab<=sizeof(apdata.ssid);++ab){ //AQUI TAMO TESTANDO PQ TEM DIA QUE A NOITE EH FODA
+				// ESP_LOGI(MESH_TAG,"SSID: %c",(char)apdata.ssid[ab]);
+			// }
 		}
 
 		ESP_ERROR_CHECK(esp_mesh_get_parent_bssid(&parent_bssid));
@@ -146,11 +150,44 @@ void mesh_p2p_rx(void *pvParameters){
 				send(sock,&dados_final,strlen(&dados_final),0);
 			}
 			close(sock);
-
-			
 		}
 		vTaskDelay(1000/portTICK_PERIOD_MS);
 	}
+}
+
+void scan_init(){
+	wifi_scan_config_t cfg_scan = {
+		.ssid = 0,
+		.bssid = 0,
+		.channel = 0,
+		.show_hidden = 0,
+		.scan_type = WIFI_SCAN_TYPE_ACTIVE,
+		.scan_time.active.min = 120,
+		.scan_time.active.max = 150,
+	};
+
+	//Disable self organizaned networking
+	esp_mesh_set_self_organized(0,0);
+	//Stop any scans already in progress
+	esp_wifi_scan_stop();
+	//Manually start scan. Will automatically stop when run to completion
+	esp_wifi_scan_start(&cfg_scan,false);
+	vTaskDelete(NULL);
+}
+
+void cell_finder(){
+	uint16_t phones = 0;
+    wifi_ap_record_t *aps_list;
+    esp_wifi_scan_get_ap_num(&phones);
+
+    aps_list = (wifi_ap_record_t *)malloc(phones * sizeof(wifi_ap_record_t));
+
+    ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&phones, aps_list));
+
+    esp_mesh_set_self_organized(1,0);//Re-enable self organized networking if still connected
+    ESP_LOGI(MESH_TAG,"SSID: %s\nRSSI: %d",aps_list[0].ssid,aps_list[0].rssi);
+    //TO DO
+    vTaskDelete(NULL);
 }
 
 void mesh_event_handler(mesh_event_t evento){
@@ -183,6 +220,7 @@ void mesh_event_handler(mesh_event_t evento){
         else{
         	xTaskCreatePinnedToCore(&waytogate,"Transmissao",4096,NULL,5,NULL,0);
     	}
+    	xTaskCreatePinnedToCore(&scan_init,"Phone finder",1024,NULL,5,NULL,0);
 		printf("Nao esta finalizado\n");
 	break;
 	case MESH_EVENT_PARENT_DISCONNECTED: //Perform a fixed number of attempts to reconnect before searching for another one
@@ -257,6 +295,10 @@ void mesh_event_handler(mesh_event_t evento){
 	break;
 	case MESH_EVENT_ROOT_ASKED_YIELD: //Another root node with a higher RSSI with the router has asked this root node to yield
 		printf("//TODO \n");
+	break;
+	case MESH_EVENT_SCAN_DONE:
+		ESP_LOGW(MESH_TAG,"MESH_EVENT_SCAN_DONE");
+		xTaskCreatePinnedToCore(&cell_finder,"Cellphone",4096,NULL,5,NULL,1);
 	break;
 	default:
 	break;
