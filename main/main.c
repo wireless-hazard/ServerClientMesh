@@ -10,14 +10,16 @@
 #include "freertos/event_groups.h"
 #include "lwip/sockets.h"
 
-#define ROUTER "192.168.43.1"
+#define ROUTER "192.168.0.1"
 #define MASCARADELE "255.255.255.0"
 
-#define TODS_IP "192.168.43.10"
+#define TODS_IP "192.168.0.6"
 #define TODS_PORT 8000
 
-#define ROUTER_SSID "apteste"
-#define ROUTER_PSWD "magnomaia"
+// #define ROUTER_SSID "apteste"
+// #define ROUTER_PSWD "magnomaia"
+#define ROUTER_SSID "redeESP"
+#define ROUTER_PSWD "teste123"
 
 #define CAMADAS 3
 #define CANAL_WIFI 0
@@ -64,11 +66,13 @@ void waytogate(){
 			// }
 		}
 
-		ESP_ERROR_CHECK(esp_mesh_get_parent_bssid(&parent_bssid));
-
-		prov_buffer[0] = (uint8_t)esp_mesh_get_layer();
-		prov_buffer[1] = (uint8_t)apdata.rssi;
-
+		esp_err_t bssid_error = esp_mesh_get_parent_bssid(&parent_bssid);
+		if (bssid_error == ESP_OK){
+			prov_buffer[0] = (uint8_t)esp_mesh_get_layer();
+			prov_buffer[1] = (uint8_t)apdata.rssi;
+		}else{
+			vTaskDelete(NULL);
+		}
 		int j = 0;
 
 		for (int i = 5; i >= 0; --i){
@@ -77,7 +81,10 @@ void waytogate(){
 		}
 
 		memcpy(current_status.data, &prov_buffer, sizeof(prov_buffer));
-		ESP_ERROR_CHECK(esp_mesh_send(&adm,&current_status,bandeira,NULL,0));
+		esp_err_t send_error = esp_mesh_send(&adm,&current_status,bandeira,NULL,0);
+		if (send_error != ESP_OK){
+			vTaskDelete(NULL);
+		}
 		ESP_LOGW(MESH_TAG,"Enviando camada para o router");
 		vTaskDelay(5*1000/portTICK_PERIOD_MS);
 		
@@ -220,7 +227,7 @@ void mesh_event_handler(mesh_event_t evento){
         else{
         	xTaskCreatePinnedToCore(&waytogate,"Transmissao",4096,NULL,5,NULL,0);
     	}
-    	xTaskCreatePinnedToCore(&scan_init,"Phone finder",1024,NULL,5,NULL,0);
+    	// xTaskCreatePinnedToCore(&scan_init,"Phone finder",1024,NULL,5,NULL,0);
 		printf("Nao esta finalizado\n");
 	break;
 	case MESH_EVENT_PARENT_DISCONNECTED: //Perform a fixed number of attempts to reconnect before searching for another one
@@ -298,7 +305,7 @@ void mesh_event_handler(mesh_event_t evento){
 	break;
 	case MESH_EVENT_SCAN_DONE:
 		ESP_LOGW(MESH_TAG,"MESH_EVENT_SCAN_DONE");
-		xTaskCreatePinnedToCore(&cell_finder,"Cellphone",4096,NULL,5,NULL,1);
+		// xTaskCreatePinnedToCore(&cell_finder,"Cellphone",4096,NULL,5,NULL,1);
 	break;
 	default:
 	break;
